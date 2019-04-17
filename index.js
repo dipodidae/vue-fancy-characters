@@ -39,7 +39,7 @@ var app = new Vue({
 
   computed: {
     output() {
-      return this.format(this.input)
+      return this.format(this.input, this.variation)
     },
     displayBytes() {
       return this.characterBytes.reverse()
@@ -50,40 +50,37 @@ var app = new Vue({
   },
 
   methods: {
-    format(text) {
+    format(text, variation) {
 
-      if (!this.variation) {
+      if (!variation) {
         return text
       }
 
-      let variation = this.conversions[this.variation]
-      
       this.characterBytes = []
 
-      if (variation.ligatures) {
-        variation.ligatures.forEach(ligature => {
+      if (this.conversions[variation].ligatures) {
+        this.conversions[variation].ligatures.forEach(ligature => {
           text = text.replace(ligature[0], ligature[1])
         })
       } 
 
-      if (variation.wrap) {
-        text = `${variation.wrap}${text}${variation.wrap}`
+      if (this.conversions[variation].wrap) {
+        text = `${this.conversions[variation].wrap}${text}${this.conversions[variation].wrap}`
       }
 
-      if (variation.capitals) {
-        text = text
-          .toLowerCase()  
+      if (this.conversions[variation].capitals) {
+        text = text.toLowerCase()
       }
       
       text = text.replace(/[a-z]/gi, (character) => {
         let characterByte = parseInt(character, 36) - 10
         let isCapital = character === character.toUpperCase()
 
-        if (!variation.capitals && isCapital) {
+        if (!this.conversions[variation].capitals && isCapital) {
           characterByte+=26
         }
  
-        let outputCharacter = variation.characters[characterByte]
+        let outputCharacter = this.conversions[variation].characters[characterByte]
         
         return outputCharacter
       })

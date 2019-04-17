@@ -2,6 +2,11 @@
     
 }
 
+body, html {
+    background:linear-gradient(#f2f2f2, #f3f3f3);
+    height:100%;
+}
+
 
 .variation-link.active {
     font-weight:bold;

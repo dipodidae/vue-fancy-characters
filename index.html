@@ -1,45 +1,40 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>test</title>
-        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
-        <link rel="stylesheet" href="index.css" />
-    </head>
-    <body>
-        <section class="section" id="app">
-            <div class="container">
-                <!-- <h1 class="title">Translate machine</h1> -->
-                <!-- <p class="subtitle">Pick a style and type something in the text box</p> -->
-                <div class="columns">
-                    <div class="column">
-                        <textarea class="textarea" v-model="input"></textarea>
-                    </div>
-                    <div class="column">
-                        <ol>
-                            <li v-for="(value, key, index) in conversions"
-                                :value="key"
-                                :key="`variation-${index}`">
-                                <a href="#"
-                                    class="variation-link"
-                                    :class="variationClass(key)"
-                                    @click.prevent="selectVariation(key)">
-                                    {{ value.name }}
-                                </a>    
-                            </li>
-                        </ol>
-                    </div>
+
+<head>
+    <meta charset="utf-8">
+    <title>test</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
+    <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+    <section class="section" id="app">
+        <div class="container">
+            <!-- <h1 class="title">Translate machine</h1> -->
+            <!-- <p class="subtitle">Pick a style and type something in the text box</p> -->
+            <div class="columns">
+                <div class="column">
+                    <textarea class="textarea" v-model="input"></textarea>
                 </div>
-                <div class="container">
-                    <div class="columns">
-                        <div class="column">
-                            <h2 class="title" v-html="output" />
+            </div>
+            <div class="container">
+                <div class="field is-horizontal" v-for="(value, key, index) in conversions" :key="`variation-${index}`">
+                    <div class="field-label is-normal">
+                        <label class="label">{{ value.name }}</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <p class="control">
+                                <input class="input" type="text" :value="format(input, key)">
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <script src="index.js"></script>
-    </body>
+        </div>
+    </section>
+    <script src="index.js"></script>
+</body>
 </html>
